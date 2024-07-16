@@ -5,3 +5,4 @@
 ## Modules
 
 - [pathperms](pathperms)
+- [pathinfo](pathinfo)
