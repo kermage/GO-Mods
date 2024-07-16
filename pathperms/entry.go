@@ -26,3 +26,7 @@ func CreateFrom(mode fs.FileMode) Permissions {
 func createMode(owner int, group int, others int) os.FileMode {
 	return os.FileMode((owner << OwnerShifter) | (group << GroupShifter) | (others << OthersShifter))
 }
+
+func (p Permissions) Bits() os.FileMode {
+	return p.bits
+}

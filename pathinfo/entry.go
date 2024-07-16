@@ -12,19 +12,39 @@ func Get(path string) PathInfo {
 	info, err := os.Lstat(path)
 
 	pi := PathInfo{
-		FullPath: path,
-		Stats:    info,
-		Exists:   true,
+		fullpath: path,
+		stats:    info,
+		exists:   true,
 	}
 
 	if err == nil {
-		pi.Mode = info.Mode()
-		pi.Permissions = pathperms.CreateFrom(pi.Mode)
+		pi.mode = info.Mode()
+		pi.permissions = pathperms.CreateFrom(pi.mode)
 	}
 
 	if os.IsNotExist(err) {
-		pi.Exists = false
+		pi.exists = false
 	}
 
 	return pi
+}
+
+func (pi *PathInfo) FullPath() string {
+	return pi.fullpath
+}
+
+func (pi *PathInfo) Permissions() pathperms.Permissions {
+	return pi.permissions
+}
+
+func (pi *PathInfo) Stats() os.FileInfo {
+	return pi.stats
+}
+
+func (pi *PathInfo) Mode() os.FileMode {
+	return pi.mode
+}
+
+func (pi *PathInfo) Exists() bool {
+	return pi.exists
 }

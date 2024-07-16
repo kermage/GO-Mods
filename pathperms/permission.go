@@ -6,29 +6,29 @@ import (
 )
 
 type Permission struct {
-	Bits os.FileMode
+	bits os.FileMode
 }
 
 func (p Permission) HasAccess() bool {
-	return p.Bits > 0
+	return p.bits > 0
 }
 
 func (p Permission) HasReadAccess() bool {
-	return int(p.Bits)&ReadDigit != 0
+	return int(p.bits)&ReadDigit != 0
 }
 
 func (p Permission) HasWriteAccess() bool {
-	return int(p.Bits)&WriteDigit != 0
+	return int(p.bits)&WriteDigit != 0
 }
 
 func (p Permission) HasExecuteAccess() bool {
-	return int(p.Bits)&ExecuteDigit != 0
+	return int(p.bits)&ExecuteDigit != 0
 }
 
 func (p Permission) String() string {
-	return strings.TrimPrefix(p.Bits.String(), "-------")
+	return strings.TrimPrefix(p.bits.String(), "-------")
 }
 
 func (p Permission) Int() int {
-	return int(p.Bits)
+	return int(p.bits)
 }

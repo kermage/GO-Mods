@@ -24,7 +24,7 @@ func TestEntries(t *testing.T) {
 		for group := range 8 {
 			for others := range 8 {
 				access := pathperms.Create(owner, group, others)
-				mode := access.Bits
+				mode := access.Bits()
 
 				if testFile.Chmod(mode) != nil {
 					t.Errorf("Failed to change the mode of test file to %#o", mode)

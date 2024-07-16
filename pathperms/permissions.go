@@ -6,25 +6,25 @@ import (
 )
 
 type Permissions struct {
-	Bits os.FileMode
+	bits os.FileMode
 }
 
 func (p Permissions) Owner() Permission {
-	return Permission{Bits: (p.Bits >> OwnerShifter)}
+	return Permission{bits: (p.bits >> OwnerShifter)}
 }
 
 func (p Permissions) Group() Permission {
-	return Permission{Bits: (p.Bits >> GroupShifter) & 7}
+	return Permission{bits: (p.bits >> GroupShifter) & 7}
 }
 
 func (p Permissions) Others() Permission {
-	return Permission{Bits: (p.Bits >> OthersShifter) & 7}
+	return Permission{bits: (p.bits >> OthersShifter) & 7}
 }
 
 func (p Permissions) String() string {
-	return strings.TrimPrefix(p.Bits.String(), "-")
+	return strings.TrimPrefix(p.bits.String(), "-")
 }
 
 func (p Permissions) Int() int {
-	return int(p.Bits)
+	return int(p.bits)
 }
