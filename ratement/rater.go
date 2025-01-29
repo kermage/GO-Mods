@@ -21,6 +21,24 @@ func NewRater(rates map[int]int) *Rater {
 	return &Rater{rates, sorted}
 }
 
+func (r *Rater) Has(id int) bool {
+	_, ok := r.rates[id]
+
+	return ok
+}
+
+func (r *Rater) Get(id int) int {
+	return r.rates[id]
+}
+
+func (r *Rater) Set(id int, value int) {
+	r.rates[id] = value
+}
+
+func (r *Rater) Delete(id int) {
+	delete(r.rates, id)
+}
+
 func (r *Rater) Value(amount int) int {
 	total := 0
 
