@@ -10,15 +10,21 @@ type Rater struct {
 }
 
 func NewRater(rates map[int]int) *Rater {
-	sorted := make([]int, 0, len(rates))
+	rater := Rater{rates: rates}
 
-	for k := range rates {
-		sorted = append(sorted, k)
+	rater.sortRates()
+
+	return &rater
+}
+
+func (r *Rater) sortRates() {
+	r.sorted = make([]int, 0, len(r.rates))
+
+	for k := range r.rates {
+		r.sorted = append(r.sorted, k)
 	}
 
-	sort.Sort(sort.Reverse(sort.IntSlice(sorted)))
-
-	return &Rater{rates, sorted}
+	sort.Sort(sort.Reverse(sort.IntSlice(r.sorted)))
 }
 
 func (r *Rater) Has(id int) bool {
@@ -32,7 +38,13 @@ func (r *Rater) Get(id int) int {
 }
 
 func (r *Rater) Set(id int, value int) {
+	replace := r.Has(id)
+
 	r.rates[id] = value
+
+	if !replace {
+		r.sortRates()
+	}
 }
 
 func (r *Rater) Delete(id int) {
@@ -50,7 +62,7 @@ func (r *Rater) Value(amount int) int {
 		usable := amount / v
 
 		if usable > 0 {
-			total += usable * r.rates[v]
+			total += usable * r.Get(v)
 			amount -= usable * v
 		}
 	}
