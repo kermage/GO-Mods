@@ -1,6 +1,6 @@
 echo "Hello from $0 script"
 
-gofiles=$(git diff --cached --name-only --diff-filter=ACM | grep '.go$')
+gofiles=$(git diff --cached --name-only --diff-filter=ACM | { grep '.go$' || true; })
 [ -z "$gofiles" ] && exit 0
 
 unformatted=$(gofmt -l $gofiles)
