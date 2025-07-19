@@ -21,6 +21,16 @@ func (e *Error) Error() string {
 	return e.Message
 }
 
+// return the error's data as a slice of key-value pairs.
+func (e *Error) Args() []any {
+	args := []any{}
+	for k, v := range e.Data {
+		args = append(args, k, v)
+	}
+
+	return args
+}
+
 // convert various data types into a structured map format for error storage.
 // handles nil values, maps, errors, and other types appropriately.
 func errorsData(data any) map[string]any {
@@ -40,11 +50,11 @@ func errorsData(data any) map[string]any {
 		}
 	case error:
 		return map[string]any{
-			"status": v.Error(),
+			"error": v.Error(),
 		}
 	default:
 		return map[string]any{
-			"status": v,
+			"error": v,
 		}
 	}
 }

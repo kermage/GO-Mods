@@ -20,32 +20,32 @@ func TestNewError(t *testing.T) {
 		{
 			data:     "demo",
 			message:  "string",
-			expected: `{"data":{"status":"demo"},"message":"string"}`,
+			expected: `{"data":{"error":"demo"},"message":"string"}`,
 		},
 		{
 			data:     911,
 			message:  "int",
-			expected: `{"data":{"status":911},"message":"int"}`,
+			expected: `{"data":{"error":911},"message":"int"}`,
 		},
 		{
 			data:     1.1,
 			message:  "float",
-			expected: `{"data":{"status":1.1},"message":"float"}`,
+			expected: `{"data":{"error":1.1},"message":"float"}`,
 		},
 		{
 			data:     false,
 			message:  "bool",
-			expected: `{"data":{"status":false},"message":"bool"}`,
+			expected: `{"data":{"error":false},"message":"bool"}`,
 		},
 		{
 			data:     fmt.Errorf("err msg"),
 			message:  "error",
-			expected: `{"data":{"status":"err msg"},"message":"error"}`,
+			expected: `{"data":{"error":"err msg"},"message":"error"}`,
 		},
 		{
 			data:     NewError("inner self", testing.T{}),
 			message:  "self",
-			expected: `{"data":{"data":{"status":{}},"message":"inner self"},"message":"self"}`,
+			expected: `{"data":{"data":{"error":{}},"message":"inner self"},"message":"self"}`,
 		},
 		{
 			data: map[string]any{
