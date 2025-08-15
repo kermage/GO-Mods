@@ -25,3 +25,18 @@ func Flip[K comparable, V comparable](
 
 	return result
 }
+
+func FilterMap[K comparable, V any](
+	m map[K]V,
+	predicate func(key K, value V) bool,
+) map[K]V {
+	result := make(map[K]V)
+
+	for k, v := range m {
+		if predicate(k, v) {
+			result[k] = v
+		}
+	}
+
+	return result
+}

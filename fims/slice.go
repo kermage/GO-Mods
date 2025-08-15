@@ -25,3 +25,18 @@ func Reduce[T any, R any](
 
 	return accumulator
 }
+
+func FilterSlice[T any](
+	collection []T,
+	predicate func(item T, index int) bool,
+) []T {
+	result := make([]T, 0)
+
+	for i, item := range collection {
+		if predicate(item, i) {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}
