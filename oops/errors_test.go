@@ -38,14 +38,29 @@ func TestNewError(t *testing.T) {
 			expected: `{"data":{"error":false},"message":"bool"}`,
 		},
 		{
+			data:     []string{"value1", "value2"},
+			message:  "slice",
+			expected: `{"data":{"error":["value1","value2"]},"message":"slice"}`,
+		},
+		{
 			data:     fmt.Errorf("err msg"),
 			message:  "error",
 			expected: `{"data":{"error":"err msg"},"message":"error"}`,
 		},
 		{
+			data:     []error{fmt.Errorf("err msg1"), fmt.Errorf("err msg2")},
+			message:  "errors",
+			expected: `{"data":{"error":["err msg1","err msg2"]},"message":"errors"}`,
+		},
+		{
 			data:     NewError("inner self", testing.T{}),
 			message:  "self",
 			expected: `{"data":{"data":{"error":{}},"message":"inner self"},"message":"self"}`,
+		},
+		{
+			data:     []*Error{NewError("inner self1", testing.T{}), NewError("inner self2", testing.T{})},
+			message:  "selves",
+			expected: `{"data":{"error":[{"data":{"error":{}},"message":"inner self1"},{"data":{"error":{}},"message":"inner self2"}]},"message":"selves"}`,
 		},
 		{
 			data: map[string]any{

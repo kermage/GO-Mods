@@ -48,13 +48,9 @@ func errorsData(data any) map[string]any {
 			"message": v.Message,
 			"data":    v.Data,
 		}
-	case error:
-		return map[string]any{
-			"error": v.Error(),
-		}
 	default:
 		return map[string]any{
-			"error": v,
+			"error": resolveErrorItem(v),
 		}
 	}
 }
@@ -93,6 +89,14 @@ func resolveErrorItem(err any) any {
 		}
 	case error:
 		return v.Error()
+	case []error:
+		result := []any{}
+
+		for _, item := range v {
+			result = append(result, item.Error())
+		}
+
+		return result
 	}
 
 	return err
